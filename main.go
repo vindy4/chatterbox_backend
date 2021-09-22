@@ -23,65 +23,25 @@ type ChatterBoxUserMessage struct {
 	DeviceID         string `json:"device_id,omitempty"`
 }
 
-// func initRoutesWithMiddleware(db *models.DB) (n *negroni.Negroni) {
-
-// 	fmt.Print(db)
-// 	router := mux.NewRouter().StrictSlash(true)
-// 	api.InitRouter(router, db)
-
-// 	n = negroni.New()
-// 	n.Use(&middleware.Logger{})
-// 	n.UseHandler(router)
-
-// 	return n
-// }
-
 func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/sendMessage", sendMessage)
+	router.HandleFunc("/", hello)
 	err := http.ListenAndServe(":8090", router)
-
+	fmt.Print("ye to chal")
 	if err != nil {
 		panic("gand fat gyi")
 	} else {
+		log.Println("things hould work")
 		fmt.Print("sab makkhna chal raha h ")
 	}
 
-	// config :=
-	// 	database.Config{
-	// 		ServerName: "localhost:3306",
-	// 		User:       "root",
-	// 		Password:   "12345678",
-	// 		DB:         "chatterbox",
-	// 	}
+}
 
-	// dbConStr := database.GetConnectionString(config)
-	// var serverPort = "8090"
-	// bippCtx is a Context object which is passed around
-	// var bippCtx = context.Background()
-	// var err error
-	// // connect to backend database
-	// // db := &models.DB{}
-	// // db, err = models.NewDatabaseClient(bippCtx, dbConStr)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// handler := initRoutesWithMiddleware(db)
-
-	// var s *http.Server
-
-	// s = &http.Server{
-	// 	Addr:    ":" + serverPort,
-	// 	Handler: handler,
-	// }
-
-	// err = s.ListenAndServe()
-	// if err != nil {
-	// 	fmt.Printf("Failed to start bipp api server : %s", err.Error())
-	// } else {
-	// 	fmt.Print("server listening")
-	// }
+func hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Welcome to the HomePage!")
+	fmt.Println("Endpoint Hit: homePage")
 
 }
 
@@ -135,48 +95,6 @@ func sendMessage(w http.ResponseWriter, r *http.Request) {
 	}
 	// Response is a message ID string.
 	fmt.Println("Successfully sent message:", response)
-
-	//==============
-
-	// // init client
-	// client := fcm.NewClient("AAAADeNFmf8:APA91bHyg0xLrO1Jgc-MvPo6-gHC8wYFgrNC9aMwKsWObwpBCu1wbjVufAxdLE_HZ5kdZhDaNss_UXQp6UApNdvvWXTiQ6yWQ5TcCJrp2q2y35qBIhS7EO0jlgmDnWnTUbNfsCO49-7b")
-	// // if err != nil {
-	// // 	panic("not connected")
-	// // }
-	// // You can use your HTTPClient
-	// //client.SetHTTPClient(client)
-
-	// data := map[string]interface{}{
-	// 	"message": "From Go-FCM",
-	// 	"details": map[string]string{
-	// 		"name":  "Name",
-	// 		"user":  "Admin",
-	// 		"thing": "none",
-	// 	},
-	// }
-
-	// // You can use PushMultiple or PushSingle
-	// // client.PushMultiple([]string{"dy3V64wvT8OvRqgkWEB8vN:APA91bHYOKrQvIi5jRQIjdiG0xuuRyhEOpNJ8hdalOOqOLIbqTjBETVEj203wiugqI9bX6JGjZKOaQhi9rmGb9RCMell0ZdZfn6TjEMjlEyA3Jv-_BW7xE0YUxGL2gJvxpayyfEIOOVa", "token 2"}, data)
-	// client.PushSingle("eRdX1cYUSRSG3IoLsZZe3d:APA91bG8Iy_lKOtxourylaXCulE9ezgCNOa5EBV667ZirDw_oa3A5ZShIuak_kghFWdENlTKDn3tVOnSuoJsstSHcPvu9bQThx9-KHCfvtutjsKVtCDpQU_eIWf-yUxTiObwkUeopeGI", data)
-
-	// // registrationIds remove and return map of invalid tokens
-	// badRegistrations := client.CleanRegistrationIds()
-	// log.Println(badRegistrations)
-
-	// status, err := client.Send()
-	// if err != nil {
-	// 	log.Fatalf("error: %v", err)
-	// } else {
-	// 	fmt.Println(status.StatusCode)
-	// 	fmt.Println(status.Err)
-	// 	fmt.Println(status.Success)
-	// 	fmt.Println(status.MultiCastId)
-	// 	fmt.Println(status.CanonicalIds)
-	// 	fmt.Println(status.Failure)
-	// 	fmt.Println(status.Results)
-	// 	fmt.Println(status.MsgId)
-	// 	fmt.Println(status.RetryAfter)
-	// }
 
 }
 
