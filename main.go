@@ -40,7 +40,13 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/sendMessage", sendMessage)
-	log.Fatal(http.ListenAndServe(":8090", router))
+	err := http.ListenAndServe(":8090", router)
+
+	if err != nil {
+		panic("gand fat gyi")
+	} else {
+		fmt.Print("sab makkhna chal raha h ")
+	}
 
 	// config :=
 	// 	database.Config{
@@ -80,6 +86,8 @@ func main() {
 }
 
 func sendMessage(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Print("chal gaya")
 
 	var (
 		err  error
